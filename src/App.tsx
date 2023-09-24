@@ -1,5 +1,5 @@
 //import React from 'react';
-import {Switch, Route, BrowserRouter} from "react-router-dom";
+import {Routes, Route, BrowserRouter} from "react-router-dom";
 
 
 import {Header} from "./Components/Header_footer/header.tsx";
@@ -15,9 +15,9 @@ function App() {
         <BrowserRouter>
             <Header/>
 
-            <Switch>
-                <Route path='/'  exact component={Home}/>
-            </Switch>
+            <Routes>
+                <Route path='/' Component={Home}/>
+            </Routes>
             <Footer/>
         </BrowserRouter>
     </>
