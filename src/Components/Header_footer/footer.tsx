@@ -1,7 +1,17 @@
+import {CityLogo} from "../Utils/tools.tsx";
+
 export const Footer = () => {
     return(
-        <>
-            footer
-        </>
+        <footer className="bck_blue">
+            <div className="footer_logo">
+                <CityLogo
+                    link={true}
+                    linkTo={'/'}
+                    width="70px"
+                    height="70px"
+                />
+            </div>
+            <div className="footer_discl">Manchester city 2021.All rights reserved</div>
+        </footer>
     )
 }

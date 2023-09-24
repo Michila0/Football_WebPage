@@ -5,6 +5,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {Header} from "./Components/Header_footer/header.tsx";
 import {Footer} from "./Components/Header_footer/footer.tsx";
 import {Home} from "./Components/Home/index.tsx";
+import {SignIn} from "./Components/Signin/index.tsx";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Header/>
 
             <Routes>
+                <Route path='/sign_in'  Component={SignIn}/>
                 <Route path='/' Component={Home}/>
             </Routes>
 
