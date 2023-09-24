@@ -1,5 +1,5 @@
 //import React from 'react';
-import {Routes, Route, BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 
 import {Header} from "./Components/Header_footer/header.tsx";
@@ -18,6 +18,7 @@ function App() {
             <Routes>
                 <Route path='/' Component={Home}/>
             </Routes>
+
             <Footer/>
         </BrowserRouter>
     </>
