@@ -1,9 +1,13 @@
 import { CircularProgress} from "@mui/material";
 import {Redirect} from "react-router-dom";
+import {firebse} from "../../firebase.tsx";
 
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useState} from "react";
+import {Simulate} from "react-dom/test-utils";
+import submit = Simulate.submit;
+import error = Simulate.error;
 
 export const SignIn = () => {
     const [loading, setLoading] = useState(false)
@@ -21,9 +25,22 @@ export const SignIn = () => {
         }),
         onSubmit: (values) => {
             setLoading(true)
-            console.log(values)
+            submitForm(values)
         }
     })
+
+    const submitForm = () => {
+        firebse.auth()
+            .signInWithEmailAndPassword(
+                values.email,
+                values.password
+            ).then(() => {
+                //show success toast
+            }).catch(error => {
+                setLoading(false);
+                //show toast
+            })
+    }
 
 
     return(
