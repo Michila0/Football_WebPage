@@ -1,15 +1,18 @@
 import { CircularProgress} from "@mui/material";
-import {Redirect} from "react-router-dom";
-import {firebse} from "../../firebase.tsx";
+//import {Redirect} from "react-router-dom";
+
+import {firebase} from "../../firebase.tsx";
+import {useState} from "react";
+
 
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {useState} from "react";
-import {Simulate} from "react-dom/test-utils";
-import submit = Simulate.submit;
-import error = Simulate.error;
+//import { PinDropSharp } from '@material-ui/icons';
+//import {Simulate} from "react-dom/test-utils";
+//import submit = Simulate.submit;
+//import error = Simulate.error;
 
-export const SignIn = () => {
+export const SignIn = (props: any) => {
     const [loading, setLoading] = useState(false)
     const formik = useFormik({
         initialValues: {
@@ -29,17 +32,19 @@ export const SignIn = () => {
         }
     })
 
-    const submitForm = () => {
-        firebse.auth()
+    const submitForm = (values: any) => {
+        firebase.auth()
             .signInWithEmailAndPassword(
                 values.email,
                 values.password
-            ).then(() => {
-                //show success toast
-            }).catch(error => {
-                setLoading(false);
-                //show toast
-            })
+            ).then(()=>{
+            // show success toast
+            props.history.push('/dashboard');
+        }).catch((error: any)=>{
+            setLoading(false);
+            alert(error)
+            /// show toasts
+        })
     }
 
 
