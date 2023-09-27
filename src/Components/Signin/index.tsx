@@ -1,26 +1,27 @@
-import { CircularProgress} from "@mui/material";
+import {CircularProgress} from "@mui/material";
 //import {Redirect} from "react-router-dom";
 
-import {firebase} from "../../firebase.tsx";
-import {useState} from "react";
-
-
 import {useFormik} from "formik";
+import {useState} from "react";
 import * as Yup from "yup";
+import {auth} from "../../config/firebase-config";
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {useNavigate} from "react-router-dom";
 //import { PinDropSharp } from '@material-ui/icons';
 //import {Simulate} from "react-dom/test-utils";
 //import submit = Simulate.submit;
 //import error = Simulate.error;
 
-export const SignIn = (props: any) => {
+export const SignIn = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const formik = useFormik({
         initialValues: {
-            email:'',
+            email: '',
             password: ''
         },
         validationSchema: Yup.object({
-            email:Yup.string()
+            email: Yup.string()
                 .email('Invalid email address')
                 .required('The email is required'),
             password: Yup.string()
@@ -33,49 +34,59 @@ export const SignIn = (props: any) => {
     })
 
     const submitForm = (values: any) => {
-        firebase.auth()
-            .signInWithEmailAndPassword(
-                values.email,
-                values.password
-            ).then(()=>{
-            // show success toast
-            props.history.push('/dashboard');
-        }).catch((error: any)=>{
+        signInWithEmailAndPassword(auth, values.email, values.password)
+            .then((userCredential) => {
+                // show success toast
+                console.log(userCredential.user.email)
+                navigate('/dashboard');
+            }).catch((error: any) => {
             setLoading(false);
             alert(error)
             /// show toasts
         })
     }
 
+    // Nipuna Aiya Guide
+    // const submitForm2 = async (values: any) => {
+    //     try {
+    //         const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password)
+    //         console.log(userCredential.user.email)
+    //         navigate('/dashboard')
+    //     } catch (error) {
+    //         setLoading(false);
+    //         alert(error)
+    //     }
+    // }
 
-    return(
+
+    return (
         <div className="container">
             <div className="signin_wrapper" style={{margin: '100px'}}>
                 <form onSubmit={formik.handleSubmit}>
                     <h2>Please login</h2>
                     <input
-                        name= 'email'
-                        placeholder= 'Email'
+                        name='email'
+                        placeholder='Email'
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.email}
                     />
 
                     {formik.touched.email && formik.errors.email
-                        ?   <div className="error_label">{formik.errors.email}</div>
-                        :   null
+                        ? <div className="error_label">{formik.errors.email}</div>
+                        : null
                     }
 
                     <input
-                        name= 'password'
-                        type= 'Password'
+                        name='password'
+                        type='Password'
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.password}
                     />
                     {formik.touched.password && formik.errors.password
-                        ?   <div className="error_label">{formik.errors.password}</div>
-                        :   null
+                        ? <div className="error_label">{formik.errors.password}</div>
+                        : null
                     }
 
                     {loading
