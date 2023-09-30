@@ -5,10 +5,10 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {Header} from "./Components/Header_footer/header.tsx";
 import {Footer} from "./Components/Header_footer/footer.tsx";
 import {Home} from "./Components/home/Home.tsx";
-import {SignIn} from "./Components/Signin";
+import {SignIn} from "./Components/signin";
 
 
-function App() {
+function App(props: any) {
 
 
   return (
