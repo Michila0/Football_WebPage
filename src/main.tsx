@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './Resources/css/app.css';
 import App from './App.tsx';
@@ -18,9 +18,10 @@ const App1 = (props: any) => {
 
 //const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
+
     ReactDOM.createRoot(document.getElementById('root')!).render(
-        <React.StrictMode>
-            <App1/>
-        </React.StrictMode>
+        //<React.StrictMode>
+            <App1 user={user}/>
+        //</React.StrictMode>
     )
 })

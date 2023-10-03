@@ -1,8 +1,21 @@
 import {AppBar, Toolbar, Button} from "@mui/material";
 import {Link} from "react-router-dom";
+import {auth} from "../../config/firebase-config.tsx";
+import {signOut} from "firebase/auth";
 
 import {CityLogo} from "../Utils/tools.tsx";
-export const Header = () => {
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+export const Header = ({user}:{}) => {
+
+    const logotHandler = () => {
+        signOut(auth)
+            .then(() => {
+                alert('signed out')
+            }).catch(error => {
+                alert('error')
+        })
+    }
     return(
         <AppBar
             position="fixed"
@@ -31,9 +44,23 @@ export const Header = () => {
                 <Link to={"/the_matches"}>
                     <Button color={"inherit"}>Matches</Button>
                 </Link>
-                <Link to={"/dashboard"}>
-                    <Button color={"inherit"}>Dashboard</Button>
-                </Link>
+
+                {user
+                    ?
+                    <>
+                        <Link to={"/dashboard"}>
+                            <Button color={"inherit"}>Dashboard</Button>
+                        </Link>
+
+                            <Button color={"inherit"}
+                                onClick={() => {logotHandler()}}
+                            >Log out</Button>
+
+                    </>
+                    :
+                    null
+                }
+
             </Toolbar>
 
         </AppBar>

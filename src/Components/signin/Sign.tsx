@@ -12,13 +12,15 @@ import {useNavigate} from "react-router-dom";
 //import submit = Simulate.submit;
 //import error = Simulate.error;
 
+import {toast} from "react-toastify";
+
 export const SignIn = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: ''
+            email: 'michelamax2000610@gmail.com',
+            password: '123456'
         },
         validationSchema: Yup.object({
             email: Yup.string()
@@ -37,6 +39,8 @@ export const SignIn = () => {
         signInWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
                 // show success toast
+                toast("Wow so easy!");
+
                 console.log(userCredential.user.email)
                 navigate('/dashboard');
             }).catch((error: any) => {
@@ -78,6 +82,7 @@ export const SignIn = () => {
                     }
 
                     <input
+                        placeholder="enter your password"
                         name='password'
                         type='Password'
                         onChange={formik.handleChange}
