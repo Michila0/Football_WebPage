@@ -1,4 +1,4 @@
-import {CityLogo} from "../Utils/tools.tsx";
+import {CityLogo} from "../utils/tools.tsx";
 
 export const Footer = () => {
     return(
@@ -11,7 +11,9 @@ export const Footer = () => {
                     height="70px"
                 />
             </div>
-            <div className="footer_discl">Manchester city 2021.All rights reserved</div>
+            <div className="footer_discl">
+                Manchester city 2021.All rights reserved
+            </div>
         </footer>
     )
 }

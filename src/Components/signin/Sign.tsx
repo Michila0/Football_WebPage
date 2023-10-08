@@ -12,7 +12,7 @@ import {useNavigate} from "react-router-dom";
 //import submit = Simulate.submit;
 //import error = Simulate.error;
 
-import {toast} from "react-toastify";
+import {showErrorToast, showSuccessToast} from "../utils/tools.tsx";
 
 export const SignIn = () => {
     const navigate = useNavigate();
@@ -39,14 +39,14 @@ export const SignIn = () => {
         signInWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
                 // show success toast
-                toast("Wow so easy!");
+                showSuccessToast('Welcome back !!')
 
                 console.log(userCredential.user.email)
                 navigate('/dashboard');
             }).catch((error: any) => {
             setLoading(false);
-            alert(error)
             /// show toasts
+            showErrorToast(error.message)
         })
     }
 

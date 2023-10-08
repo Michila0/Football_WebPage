@@ -6,13 +6,15 @@ import {Header} from "./Components/header-footer/header.tsx";
 import {Footer} from "./Components/header-footer/footer.tsx";
 import {Home} from "./Components/home/Home.tsx";
 import {SignIn} from "./Components/signin/Sign.tsx";
+import {Dashboard} from "./Components/admin/Dashboard.tsx";
 
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
 
-function App({user}) {
+
+function App({user}:{}) {
 
   return (
     <>
@@ -20,6 +22,7 @@ function App({user}) {
             <Header user={user}/>
 
             <Routes>
+                <Route path='/dashboard'  Component={Dashboard}/>
                 <Route path='/sign_in'  Component={SignIn}/>
                 <Route path='/' Component={Home}/>
             </Routes>

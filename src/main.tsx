@@ -16,7 +16,7 @@ const App1 = (props: any) => {
 
 
 
-//const auth = getAuth();
+//const root = ReactDOM.createRoot(document.getElementById('root')!)
 onAuthStateChanged(auth, (user) => {
 
     ReactDOM.createRoot(document.getElementById('root')!).render(
