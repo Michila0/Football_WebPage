@@ -20,8 +20,6 @@ const App1 = (props: any) => {
 onAuthStateChanged(auth, (user) => {
 
     ReactDOM.createRoot(document.getElementById('root')!).render(
-        //<React.StrictMode>
             <App1 user={user}/>
-        //</React.StrictMode>
     )
 })

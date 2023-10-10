@@ -8,7 +8,7 @@ import {showErrorToast, showSuccessToast} from "../utils/tools.tsx";
 import {CityLogo} from "../utils/tools.tsx";
 //import {Simulate} from "react-dom/test-utils";
 //import error = Simulate.error;
-export const Header = ({user}:{}) => {
+export const Header = ({user}:any) => {
 
     const logotHandler = () => {
         signOut(auth)

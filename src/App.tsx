@@ -10,11 +10,19 @@ import {Dashboard} from "./Components/admin/Dashboard.tsx";
 
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {Auth} from "./hoc/Auth.tsx";
+
+interface RoutesProps {
+    user: any;
+}
 
 
+const App: React.FC<RoutesProps> = ({user}) => {
 
-
-function App({user}:{}) {
+    //automtically creat the function for the func error
+    // function func(Dashboard: () => import("react/jsx-runtime").JSX.Element): import("react").ComponentType<{}> | null | undefined {
+    //     throw new Error("Function not implemented.");
+    // }
 
   return (
     <>
@@ -22,7 +30,7 @@ function App({user}:{}) {
             <Header user={user}/>
 
             <Routes>
-                <Route path='/dashboard'  Component={Dashboard}/>
+                <Route path='/dashboard'  Component={Auth(Dashboard)}/>
                 <Route path='/sign_in'  Component={SignIn}/>
                 <Route path='/' Component={Home}/>
             </Routes>

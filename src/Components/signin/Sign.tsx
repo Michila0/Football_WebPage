@@ -6,7 +6,7 @@ import {useState} from "react";
 import * as Yup from "yup";
 import {auth} from "../../config/firebase-config";
 import {signInWithEmailAndPassword} from "firebase/auth";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 //import { PinDropSharp } from '@material-ui/icons';
 //import {Simulate} from "react-dom/test-utils";
 //import submit = Simulate.submit;
@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 
 import {showErrorToast, showSuccessToast} from "../utils/tools.tsx";
 
-export const SignIn = () => {
+export const SignIn = (props: any) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const formik = useFormik({
@@ -64,6 +64,9 @@ export const SignIn = () => {
 
 
     return (
+        <>
+        { !props.user
+        ?
         <div className="container">
             <div className="signin_wrapper" style={{margin: '100px'}}>
                 <form onSubmit={formik.handleSubmit}>
@@ -101,5 +104,8 @@ export const SignIn = () => {
                 </form>
             </div>
         </div>
+        : <Navigate to="/dashboard"/>
+        }
+        </>
     )
 }
