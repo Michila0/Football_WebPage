@@ -31,7 +31,8 @@ const App: React.FC<RoutesProps> = ({user}) => {
 
             <Routes>
                 <Route path='/dashboard'  Component={Auth(Dashboard)}/>
-                <Route path='/sign_in'  Component={SignIn}/>
+                <Route path='/sign_in'  Component={
+                    props => (<SignIn {...props} user={user}/>)}/>
                 <Route path='/' Component={Home}/>
             </Routes>
             <ToastContainer/>
