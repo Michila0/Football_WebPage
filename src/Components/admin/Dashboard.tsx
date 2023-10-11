@@ -1,10 +1,16 @@
+import React from "react";
+import {AdminLayout} from "../../hoc/AdminLayout.tsx";
+
 interface DashboardProps {}
 export const Dashboard: React.FC<DashboardProps> = () => {
 
     return(
-        <>
-            <br/>  <br/>  <br/>  <br/>  <br/>  <br/>  <br/>  <br/>
-            dashboard
-        </>
+        <AdminLayout title={"Dashboard"}>
+            <div className="user_dashboard">
+                <div>
+                    This is your dashboard
+                </div>
+            </div>
+        </AdminLayout>
     )
 }

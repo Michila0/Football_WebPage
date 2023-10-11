@@ -2,7 +2,10 @@ import {Link} from "react-router-dom";
 import {toast} from "react-toastify";
 
 
+
 import mcitylogo from "../../Resources/images/logos/manchester_city_logo.png";
+import {signOut} from "firebase/auth";
+import {auth} from "../../config/firebase-config.tsx";
 
 export const CityLogo = (props: any) => {
     const template = <div
@@ -33,5 +36,14 @@ export const showErrorToast = (msg: string) => {
 export const showSuccessToast = (msg: string) => {
     toast.success(msg,{
         position: toast.POSITION.TOP_LEFT
+    })
+}
+
+export const logoutHandler = () => {
+    signOut(auth)
+        .then(() => {
+            showSuccessToast('Good bye!!')
+        }).catch(error => {
+        showErrorToast(error.message)
     })
 }
