@@ -1,7 +1,9 @@
+import { Featured } from './featured/Featured.tsx';
+
 export const Home = () => {
     return(
-        <>
-            home
-        </>
+        <div className="bck_blue">
+            <Featured/>
+        </div>
     )
 }
