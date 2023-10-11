@@ -15,6 +15,14 @@ export const Test = () => {
             >
                 Update
             </button>
+
+            <button
+                onClick={ () => {
+                    setShow(false)
+                }}
+            >
+                Remove
+            </button>
             <Animate
                 show={show}
                 start={{
@@ -46,7 +54,7 @@ export const Test = () => {
 
                 }}
                 leave={{
-                    width: [100],
+                    width: [1000],
                     opacity: [0],
                     timing: {
                         duration: 500,
