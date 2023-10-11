@@ -1,8 +1,5 @@
 import {AppBar, Toolbar, Button} from "@mui/material";
 import {Link} from "react-router-dom";
-//import {auth} from "../../config/firebase-config.tsx";
-//import {signOut} from "firebase/auth";
-//import {showErrorToast, showSuccessToast} from "../utils/tools.tsx";
 import { logoutHandler } from "../utils/tools.tsx";
 
 
@@ -11,14 +8,7 @@ import {CityLogo} from "../utils/tools.tsx";
 //import error = Simulate.error;
 export const Header = ({user}:any) => {
 
-    // const logoutHandler = () => {
-    //     signOut(auth)
-    //         .then(() => {
-    //             showSuccessToast('Good bye!!')
-    //         }).catch(error => {
-    //         showErrorToast(error.message)
-    //     })
-    // }
+
     return(
         <AppBar
             position="fixed"
