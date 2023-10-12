@@ -23,6 +23,15 @@ export const Test = () => {
             >
                 Remove
             </button>
+
+            <button
+                onClick={ () => {
+                    setShow(true)
+                }}
+            >
+                Show
+            </button>
+
             <Animate
                 show={show}
                 start={{
@@ -50,17 +59,38 @@ export const Test = () => {
                     timing: {
                         duration: 2000,
                         ease: easePolyOut
+                    },
+                    events: {
+                        start: () => {
+                            console.log('STARTED')
+                        },
+                        end: () => {
+                            console.log('ENDED')
+                        },
+                        interrupt: () => {
+                            ////
+                        }
                     }
 
                 }}
-                leave={{
-                    width: [1000],
-                    opacity: [0],
-                    timing: {
-                        duration: 500,
-                        ease: easePolyOut
+
+                leave={[
+                    {
+                        width: [1000],
+                        timing: {
+                            duration: 500,
+                            ease: easePolyOut
+                        }
+                    },
+                    {
+                        opacity: [0],
+                        timing: {
+                            delay: 2000,
+                            duration: 3000,
+                            ease: easePolyOut
+                        }
                     }
-                }}
+                ]}
             >
                 { ({ backgroundColor, width, height, opacity}) => (
                     <div
