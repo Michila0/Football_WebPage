@@ -36,7 +36,15 @@ export const db = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
 //firestore Collection
 export const matchesCollection = collection(db, 'matches')
+export const playersCollection = collection(db, 'players')
+export const positionsCollection = collection(db, 'positions')
+export const promotionsCollection = collection(db, 'promotions')
+export const teamsCollection = collection(db, 'teams')
 
 
 
-cityDb.matches.forEach(async item => await addDoc(matchesCollection,item))
+// cityDb.matches.forEach(async item => await addDoc(matchesCollection,item))
+//cityDb.players.forEach(async item => await addDoc(playersCollection,item))
+//cityDb.positions.forEach(async item => await addDoc(positionsCollection,item))
+//cityDb.promotions.forEach(async item => await addDoc(promotionsCollection,item))
+//cityDb.teams.forEach(async item => await addDoc(teamsCollection,item))
