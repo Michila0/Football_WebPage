@@ -5,7 +5,17 @@ import { getDocs,QueryDocumentSnapshot } from "firebase/firestore";
 //import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
 import { Slide } from 'react-awesome-reveal';
 
-interface MatchData {}
+interface MatchData {
+    id: string;
+    date: string;
+    localThmb: string;
+    local: string;
+    resultLocal: string;
+    awayThmb: string;
+    away: string;
+    resultAway: string;
+    final: boolean;
+}
 export const Blocks = () => {
     const [matches, setMatches] = useState<MatchData[]>([])
 
@@ -13,7 +23,17 @@ export const Blocks = () => {
         const fetchData = async () => {
             try {
                 const snapshot = await getDocs(matchesCollection)
-                const matchesData:MatchData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({}))
+                const matchesData:MatchData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
+                    id: doc.id,
+                    date: doc.data().date,
+                    localThmb: doc.data().localThmb,
+                    local: doc.data().local,
+                    resultLocal: doc.data().resultLocal,
+                    awayThmb: doc.data().awayThmb,
+                    away: doc.data().away,
+                    resultAway: doc.data().resultAway,
+                    final: doc.data().final,
+                }))
                 setMatches(matchesData)
                 console.log(matchesData)
 
@@ -27,9 +47,23 @@ export const Blocks = () => {
         }
     },[matches]);
 
+    const showMatches = (matches: MatchData[]) => (
+        matches
+        ? matches.map((match) => (
+                <Slide key={match.id} className='item' triggerOnce>
+                    <div>
+                        <div className='wrapper'>
+                            match
+                        </div>
+                    </div>
+                </Slide>
+            ))
+        : null
+    )
+
     return(
-        <div>
-            hello
+        <div className='home_matches'>
+            {showMatches(matches)}
         </div>
     )
 }
