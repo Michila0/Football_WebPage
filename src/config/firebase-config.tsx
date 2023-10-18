@@ -42,7 +42,7 @@ export const promotionsCollection = collection(db, 'promotions')
 export const teamsCollection = collection(db, 'teams')
 
 
-
+//import the data
 // cityDb.matches.forEach(async item => await addDoc(matchesCollection,item))
 //cityDb.players.forEach(async item => await addDoc(playersCollection,item))
 //cityDb.positions.forEach(async item => await addDoc(positionsCollection,item))
