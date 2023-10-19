@@ -20,7 +20,7 @@ export const MatchesHome = () => {
                     link={true}
                     linkTo="/the_team"
                 >
-                    Matches
+                    See more matches
                 </Tag>
             </div>
         </div>

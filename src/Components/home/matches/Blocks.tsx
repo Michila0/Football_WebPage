@@ -51,7 +51,7 @@ export const Blocks = () => {
     const showMatches = (matches: MatchData[]) => (
         matches
         ? matches.map((match) => (
-                <Slide key={match.id} className='item' triggerOnce>
+                <Slide key={match.id} className='item' triggerOnce >
                     <div>
                         <div className='wrapper'>
                             <Matches_Block match={match} />

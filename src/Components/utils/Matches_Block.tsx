@@ -1,6 +1,18 @@
-//import * as url from "url";
-
-export const Matches_Block: React.FC<Matches> = ({match}) => {
+import React from 'react';
+interface Match {
+    date: string;
+    localThmb: string;
+    local: string;
+    resultLocal: string;
+    awayThmb: string;
+    away: string;
+    resultAway: string;
+    final: boolean;
+}
+interface MatchesBlockProps {
+    match: Match;
+}
+export const Matches_Block: React.FC<MatchesBlockProps> = ({match}) => {
     return (
         <div className="match_block">
             <div className="match_date">
