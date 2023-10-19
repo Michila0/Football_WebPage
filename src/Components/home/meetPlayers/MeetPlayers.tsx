@@ -33,6 +33,21 @@ export const MeetPlayers = () => {
                             <div>{showTextTag('Meet')}</div>
                             <div>{showTextTag('The')}</div>
                             <div>{showTextTag('Players')}</div>
+                            <div>
+                                <Tag
+                                    bck= '#ffffff'
+                                    size= "27px"
+                                    color= "#0e1731"
+                                    link= {true}
+                                    linkTo= "/the_team"                                    add={{
+                                        display: 'inline-block',
+                                        marginBottom: '20px',
+                                        border: '1px solid #0e1731'
+                                    }}
+                                >
+                                    Meet them here
+                                </Tag>
+                            </div>
                         </div>
                     </div>
                 </div>
