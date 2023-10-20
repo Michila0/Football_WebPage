@@ -1,5 +1,6 @@
 import { Tag } from '../../utils/tools.tsx';
 import { Fade } from "react-awesome-reveal";
+import { HomeCard } from "./Cards.tsx";
 
 let tagDefault = {
     bck: '#0e1731',
@@ -27,7 +28,7 @@ export const MeetPlayers = () => {
                 <div className="container">
                     <div className="home_meetplayers_wrapper">
                         <div className="home_card_wrapper">
-                            card
+                            <HomeCard/>
                         </div>
                         <div className="home_text_wrapper">
                             <div>{showTextTag('Meet')}</div>

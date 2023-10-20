@@ -5,6 +5,7 @@ import Animate from 'react-move/Animate';
 import Kompany from '../../../Resources/images/players/Vincent_Kompany.png';
 import Raheem from '../../../Resources/images/players/Raheem_Sterling.png';
 import Otamendi from '../../../Resources/images/players/Otamendi.png';
+import { PlayerCard } from "../../utils/PlayerCard.tsx";
 
 interface Card {
     bottom: number;
@@ -14,18 +15,18 @@ interface Card {
 
 let cards: Card[] = [
     {
-        bottom: 0,
-        left: 0,
+        bottom: 90,
+        left: 300,
         player: Kompany,
     },
     {
-        bottom: 0,
-        left: 0,
+        bottom: 60,
+        left: 200,
         player: Raheem,
     },
     {
-        bottom: 0,
-        left: 0,
+        bottom: 30,
+        left: 100,
         player: Otamendi,
     },
     {
@@ -35,11 +36,43 @@ let cards: Card[] = [
     }
 ]
 
-export const HomeCard = () => {
+interface HomeCardProps {
+    show: boolean;
+}
+export const HomeCard: React.FC<HomeCardProps> = () => {
 
     const showAnimateCards = () => (
         cards.map((card, i) => (
-            <Animate></Animate>
+            <Animate
+                key={i}
+                show={true}
+                start={{
+                    left: 0,
+                    bottom: 0
+                }}
+                enter={{
+                    left: [card.left],
+                    bottom: [card.bottom],
+                    timing: {duration: 500, ease: easePolyOut}
+                }}
+            >
+                {({left, bottom}) => (
+                    <div
+                        style={{
+                            position: 'absolute',
+                            left,
+                            bottom
+                        }}
+                    >
+                        <PlayerCard
+                            number = "30"
+                            name="Nicolas"
+                            lastname="Otemendi"
+                            bck={card.player}
+                        />
+                    </div>
+                )}
+            </Animate>
         ))
     );
     return(
