@@ -17,7 +17,8 @@ export const PlayerCard: React.FC<PlayerCardProps> = (props) => {
             <div className="player_card_nfo">
                 <div className="player_card_number">{props.number}</div>
                 <div className="player_card_name">
-                    <span></span>
+                    <span>{props.name}</span>
+                    <span>{props.lastname}</span>
                 </div>
             </div>
         </div>

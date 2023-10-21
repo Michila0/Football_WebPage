@@ -39,13 +39,13 @@ let cards: Card[] = [
 interface HomeCardProps {
     show: boolean;
 }
-export const HomeCard: React.FC<HomeCardProps> = () => {
+export const HomeCard: React.FC<HomeCardProps> = ({show}) => {
 
     const showAnimateCards = () => (
         cards.map((card, i) => (
             <Animate
                 key={i}
-                show={true}
+                show={show}
                 start={{
                     left: 0,
                     bottom: 0

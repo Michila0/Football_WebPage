@@ -1,6 +1,7 @@
 import { Tag } from '../../utils/tools.tsx';
 import { Fade } from "react-awesome-reveal";
 import { HomeCard } from "./Cards.tsx";
+import {useState} from "react";
 
 let tagDefault = {
     bck: '#0e1731',
@@ -9,6 +10,7 @@ let tagDefault = {
 }
 export const MeetPlayers = () => {
 
+    const [show, setShow] = useState()
     const showTextTag = (text: string) => (
         <Tag
             {...tagDefault}
