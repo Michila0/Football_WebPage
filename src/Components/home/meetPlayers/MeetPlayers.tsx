@@ -10,7 +10,7 @@ let tagDefault = {
 }
 export const MeetPlayers = () => {
 
-    const [show, setShow] = useState()
+    const [show, setShow] = useState(false);
     const showTextTag = (text: string) => (
         <Tag
             {...tagDefault}
@@ -24,13 +24,17 @@ export const MeetPlayers = () => {
     )
     return (
         <Fade
+            onVisibilityChange={(inView) => {
+                if (inView){setShow(true)}
+            }}
+
             triggerOnce
         >
             <div className="home_meetplayers">
                 <div className="container">
                     <div className="home_meetplayers_wrapper">
                         <div className="home_card_wrapper">
-                            <HomeCard/>
+                            <HomeCard show={show}/>
                         </div>
                         <div className="home_text_wrapper">
                             <div>{showTextTag('Meet')}</div>
