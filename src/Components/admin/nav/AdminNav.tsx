@@ -9,8 +9,8 @@ interface AdminNavProps {
 }
 export const AdminNav: React.FC<AdminNavProps> = ({}) => {
     const links = [
-        {title: "Matches", link: '/admin_matches'},
-        {title: "Players", link: '/admin_players'}
+        {title: "Matches", linkTo: '/admin_matches'},
+        {title: "Players", linkTo: '/admin_players'}
     ]
 
     const renderItem = () => (

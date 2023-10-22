@@ -7,6 +7,7 @@ import {Footer} from "./Components/header-footer/footer.tsx";
 import {Home} from "./Components/home/Home.tsx";
 import {SignIn} from "./Components/signin/Sign.tsx";
 import {Dashboard} from "./Components/admin/Dashboard.tsx";
+import {AdminPlayers} from "./Components/admin/players/AdminPlayers.tsx";
 
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,10 +20,6 @@ interface RoutesProps {
 
 const App: React.FC<RoutesProps> = ({user}) => {
 
-    //automtically creat the function for the func error
-    // function func(Dashboard: () => import("react/jsx-runtime").JSX.Element): import("react").ComponentType<{}> | null | undefined {
-    //     throw new Error("Function not implemented.");
-    // }
 
   return (
     <>
@@ -30,6 +27,7 @@ const App: React.FC<RoutesProps> = ({user}) => {
             <Header user={user}/>
 
             <Routes>
+                <Route path='/admin_players'  Component={Auth(AdminPlayers)}/>
                 <Route path='/dashboard'  Component={Auth(Dashboard)}/>
                 <Route path='/sign_in'  Component={
                     props => (<SignIn {...props} user={user}/>)}/>
