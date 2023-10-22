@@ -53,7 +53,7 @@ export const HomeCard: React.FC<HomeCardProps> = ({show}) => {
                 enter={{
                     left: [card.left],
                     bottom: [card.bottom],
-                    timing: {duration: 500, ease: easePolyOut}
+                    timing: {delay:1000, duration: 500, ease: easePolyOut}
                 }}
             >
                 {({left, bottom}) => (
