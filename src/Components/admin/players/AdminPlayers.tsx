@@ -2,7 +2,9 @@ import React, {useState, useEffect} from "react";
 import { AdminLayout } from "../../../hoc/AdminLayout.tsx";
 import { playersCollection } from "../../../config/firebase-config.tsx";
 import {getDocs, limit, query, startAfter} from "firebase/firestore";
-import {Button} from "@mui/material";
+import { Button, Table, TableBody, TableCell, TableRow, Paper, CircularProgress } from "@mui/material";
+import { showErrorToast } from "../../utils/tools.tsx";
+import {Link} from "react-router-dom";
 
 export const AdminPlayers = () => {
 
@@ -25,7 +27,7 @@ export const AdminPlayers = () => {
                     setLastVisible(lastVisible);
                     setPlayers(players);
                 }).catch(error => {
-                    console.log(error)
+                    showErrorToast(error)
                 }).finally(() => {
                     setLoading(false);
                 })
@@ -51,17 +53,27 @@ export const AdminPlayers = () => {
                     setPlayers([...players, ...newPlayers])
                 })
                 .catch(error => {
-                    console.log(error)
+                    showErrorToast(error)
                 }).finally(() => {
                 setLoading(false);
             })
         }else{
-            console.log('nothing to load')
+            showErrorToast('nothing to load')
         }
     }
 
     return (
         <AdminLayout title="The Players" >
+            <div className="mb-5">
+                <Button
+                    disableElevation
+                    variant="outlined"
+                    component={Link}
+                    to={'/admin_players/add_player'}
+                >
+                    Add player
+                </Button>
+            </div>
             <Button
                 onClick={() => loadMorePlayers()}
             >
