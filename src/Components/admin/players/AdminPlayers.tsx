@@ -94,10 +94,10 @@ export const AdminPlayers = () => {
                         ? players.map((player: any, i:number) => (
                             <TableRow key={player.id}>
                                 <TableCell>
-                                    <Link to={`./admin_players/edit_player/${player.id}`}>{player.name}</Link>
+                                    <Link to={`/admin_players/edit_player/${player.id}`}>{player.name}</Link>
                                 </TableCell>
                                 <TableCell>
-                                    <Link to={`./admin_players/edit_player/${player.id}`}>{player.lastname}</Link>
+                                    <Link to={`/admin_players/edit_player/${player.id}`}>{player.lastname}</Link>
                                 </TableCell>
                                 <TableCell>
                                     {player.number}

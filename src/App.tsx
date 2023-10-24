@@ -8,6 +8,8 @@ import {Home} from "./Components/home/Home.tsx";
 import {SignIn} from "./Components/signin/Sign.tsx";
 import {Dashboard} from "./Components/admin/Dashboard.tsx";
 import {AdminPlayers} from "./Components/admin/players/AdminPlayers.tsx";
+import { AddEditPlayers } from "./Components/admin/players/AddEditPlayers.tsx";
+
 
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,6 +29,8 @@ const App: React.FC<RoutesProps> = ({user}) => {
             <Header user={user}/>
 
             <Routes>
+                <Route path="/admin_players/edit_player/:playerid" Component={Auth(AddEditPlayers)}/>
+                <Route path='/admin_players/add_player'  Component={Auth(AddEditPlayers)}/>
                 <Route path='/admin_players'  Component={Auth(AdminPlayers)}/>
                 <Route path='/dashboard'  Component={Auth(Dashboard)}/>
                 <Route path='/sign_in'  Component={

@@ -83,3 +83,8 @@ export const logoutHandler = () => {
         showErrorToast(error.message)
     })
 }
+
+export const textErrorHelper = (formik: any, values: string) => ({
+    error: formik.errors[values] && formik.touched[values],
+    helperText: formik.errors[values] && formik.touched[values] ? formik.errors[values] : null
+})
