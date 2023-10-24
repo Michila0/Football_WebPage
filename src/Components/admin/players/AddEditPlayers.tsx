@@ -1,5 +1,5 @@
 import {AdminLayout} from "../../../hoc/AdminLayout.tsx";
-import { showErrorToast, showSuccessToast, textErrorHelper } from "../../utils/tools.tsx";
+import {selectError, selectErrorHelper, showErrorToast, showSuccessToast, textErrorHelper} from "../../utils/tools.tsx";
 import { playersCollection } from "../../../config/firebase-config.tsx";
 
 import { useFormik } from "formik";
@@ -8,17 +8,24 @@ import { TextField, Select, MenuItem, FormControl, Button} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 
-
+type valuesType = {
+    name: string,
+    lastname: string,
+    position: string,
+    number: string,
+    image?: string
+}
 const defaultValues = {
     name: '',
     lastname: '',
     number: '',
-    position: ''
+    position: '',
+    image: ''
 }
 export const AddEditPlayers = () => {
 
     const [formType, setFormType] = useState('');
-    const [values, setValues] = useState(defaultValues);
+    const [values, setValues] = useState<valuesType>(defaultValues);
     const {playerid} = useParams();
 
     const formik = useFormik({
@@ -62,12 +69,59 @@ export const AddEditPlayers = () => {
                             <FormControl>
                                 <TextField
                                     id='name'
-                                    name='name'
+                                    // name='name'
                                     variant='outlined'
                                     placeholder='Add firstname'
                                     {...formik.getFieldProps('name')}
                                     {...textErrorHelper(formik,'name')}
                                 />
+                            </FormControl>
+                        </div>
+
+                        <div className='mb-5'>
+                            <FormControl>
+                                <TextField
+                                    id='lastname'
+                                    // name='lastname'
+                                    variant='outlined'
+                                    placeholder='Add lastname'
+                                    {...formik.getFieldProps('lastname')}
+                                    {...textErrorHelper(formik,'lastname')}
+                                />
+                            </FormControl>
+                        </div>
+
+                        <div className='mb-5'>
+                            <FormControl>
+                                <TextField
+                                    id='number'
+                                    // name='number'
+                                    variant='outlined'
+                                    placeholder='Add number'
+                                    {...formik.getFieldProps('number')}
+                                    {...textErrorHelper(formik,'number')}
+                                />
+                            </FormControl>
+                        </div>
+
+                        <div className='mb-5'>
+                            <FormControl error={selectError(formik,'position')}>
+                                <Select
+                                    id='position'
+                                    // name='position'
+                                    variant='outlined'
+                                    displayEmpty
+                                    {...formik.getFieldProps('position')}
+                                >
+                                    <MenuItem value="" disabled>Select a position</MenuItem>
+                                    <MenuItem value='Keeper'>Keeper</MenuItem>
+                                    <MenuItem value='Defence'>Defence</MenuItem>
+                                    <MenuItem value='Midfield'>Midfield</MenuItem>
+                                    <MenuItem value='Striker'>Striker</MenuItem>
+                                </Select>
+
+                                {selectErrorHelper(formik,'position')}
+
                             </FormControl>
                         </div>
                     </form>

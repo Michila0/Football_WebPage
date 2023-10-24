@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {toast} from "react-toastify";
-
+import { FormHelperText } from "@mui/material";
 
 
 import mcitylogo from "../../Resources/images/logos/manchester_city_logo.png";
@@ -88,3 +88,14 @@ export const textErrorHelper = (formik: any, values: string) => ({
     error: formik.errors[values] && formik.touched[values],
     helperText: formik.errors[values] && formik.touched[values] ? formik.errors[values] : null
 })
+
+export const selectErrorHelper = (formik: any, values: string) => {
+    if(formik.errors[values] && formik.touched[values]) {
+        return(<FormHelperText>{formik.errors[values]}</FormHelperText>)
+    }
+    return false;
+}
+
+export const selectError = (formik: any, values: string) => {
+    return formik.errors[values] && formik.touched[values]
+}
