@@ -7,6 +7,8 @@ import * as Yup from 'yup';
 import { TextField, Select, MenuItem, FormControl, Button} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import {DocumentData, addDoc, doc, getDoc} from 'firebase/firestore'
+
 
 type valuesType = {
     name: string,
@@ -15,7 +17,7 @@ type valuesType = {
     number: string,
     image?: string
 }
-const defaultValues = {
+const defaultValues: valuesType = {
     name: '',
     lastname: '',
     number: '',
@@ -24,8 +26,10 @@ const defaultValues = {
 }
 export const AddEditPlayers = () => {
 
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false)
     const [formType, setFormType] = useState('');
-    const [values, setValues] = useState<valuesType>(defaultValues);
+    const [values, setValues] = useState<valuesType | DocumentData>(defaultValues);
     const {playerid} = useParams();
 
     const formik = useFormik({
@@ -35,28 +39,66 @@ export const AddEditPlayers = () => {
             name: Yup.string().required('This input is required'),
             lastname: Yup.string().required('This input required'),
             number: Yup.number().required('This input required')
-                .min('0','The minimum is cero')
-                .max('100','The maximum is 100'),
+                .min(0,'The minimum is cero')
+                .max(100,'The maximum is 100'),
             position: Yup.string().required('This input required'),
             image: Yup.string().required('image is required')
-        })
-    })
+        }),
+        onSubmit: (values: valuesType | DocumentData) => {
+            console.log(values)
+            submitForm(values)
+        },
+    });
+
+
+    const submitForm = (values: valuesType | DocumentData) => {
+        let dataToSubmit = values;
+        if (formType === 'add') {
+            ///add
+            addDoc(playersCollection, dataToSubmit)
+                .then(() => {
+                    showSuccessToast('Player added')
+                    formik.resetForm();
+                    navigate("/admin_players")
+                })
+                .catch(error => {
+                    showErrorToast(error)
+                })
+        } else {
+            //edit
+        }
+    }
 
     useEffect(() => {
         const param = playerid;
         if (param){
-            setFormType('edit');
-            setValues({name: 'sjshsjs',lastname: '',number: '',position: ''})
+
+            const docRef = doc(playersCollection, param)
+            getDoc(docRef)
+                .then((snapshot) => {
+                    if (snapshot.data()){
+                        setFormType('edit');
+                        setValues(snapshot.data()!)
+                    }else {
+                        showErrorToast('sorry nothing was found')
+                    }
+                })
+                .catch((error) => {
+                    showErrorToast(error)
+
+                })
+
+
         }else {
             setFormType('add');
             setValues(defaultValues)
         }
     }, [playerid]);
 
-    console.log(formType,values)
+
 
     return (
-        <AdminLayout title={formType === 'add' ? 'Add player' : 'Edit player'} navigate={useNavigate()}>
+        <AdminLayout title={formType === 'add' ? 'Add player' : 'Edit player'} navigate={navigate}>
             <div className='editmatch_dialog_wrapper'>
                 <div>
                     <form onSubmit={formik.handleSubmit}>
@@ -69,7 +111,6 @@ export const AddEditPlayers = () => {
                             <FormControl>
                                 <TextField
                                     id='name'
-                                    // name='name'
                                     variant='outlined'
                                     placeholder='Add firstname'
                                     {...formik.getFieldProps('name')}
@@ -82,7 +123,6 @@ export const AddEditPlayers = () => {
                             <FormControl>
                                 <TextField
                                     id='lastname'
-                                    // name='lastname'
                                     variant='outlined'
                                     placeholder='Add lastname'
                                     {...formik.getFieldProps('lastname')}
@@ -95,7 +135,7 @@ export const AddEditPlayers = () => {
                             <FormControl>
                                 <TextField
                                     id='number'
-                                    // name='number'
+                                    type='number'
                                     variant='outlined'
                                     placeholder='Add number'
                                     {...formik.getFieldProps('number')}
@@ -108,7 +148,6 @@ export const AddEditPlayers = () => {
                             <FormControl error={selectError(formik,'position')}>
                                 <Select
                                     id='position'
-                                    // name='position'
                                     variant='outlined'
                                     displayEmpty
                                     {...formik.getFieldProps('position')}
@@ -124,6 +163,17 @@ export const AddEditPlayers = () => {
 
                             </FormControl>
                         </div>
+
+                        <Button
+                            type= 'submit'
+                            variant= 'contained'
+                            color= 'primary'
+                            disabled= {loading}
+                        >
+                            {formType == "add" ? 'Add player' : 'Edit player'}
+                        </Button>
+
+
                     </form>
                 </div>
             </div>

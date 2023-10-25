@@ -93,7 +93,7 @@ export const selectErrorHelper = (formik: any, values: string) => {
     if(formik.errors[values] && formik.touched[values]) {
         return(<FormHelperText>{formik.errors[values]}</FormHelperText>)
     }
-    return false;
+    return false
 }
 
 export const selectError = (formik: any, values: string) => {
