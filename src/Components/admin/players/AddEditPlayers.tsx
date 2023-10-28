@@ -2,12 +2,14 @@ import {AdminLayout} from "../../../hoc/AdminLayout.tsx";
 import {selectError, selectErrorHelper, showErrorToast, showSuccessToast, textErrorHelper} from "../../utils/tools.tsx";
 import { playersCollection } from "../../../config/firebase-config.tsx";
 
+
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { TextField, Select, MenuItem, FormControl, Button} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {DocumentData, addDoc, doc, getDoc} from 'firebase/firestore'
+import {DocumentData, addDoc, doc, getDoc, updateDoc} from 'firebase/firestore'
+import { FileUploader } from "../../utils/FileUploader.tsx";
 
 
 type valuesType = {
@@ -39,35 +41,42 @@ export const AddEditPlayers = () => {
             name: Yup.string().required('This input is required'),
             lastname: Yup.string().required('This input required'),
             number: Yup.number().required('This input required')
-                .min(0,'The minimum is cero')
+                .min(0,'The minimum is zero')
                 .max(100,'The maximum is 100'),
             position: Yup.string().required('This input required'),
-            image: Yup.string().required('image is required')
+            image: Yup.string().required('image is required'),
         }),
-        onSubmit: (values: valuesType | DocumentData) => {
+        onSubmit: (values) => {
             console.log(values)
             submitForm(values)
         },
     });
 
 
-    const submitForm = (values: valuesType | DocumentData) => {
-        let dataToSubmit = values;
-        if (formType === 'add') {
-            ///add
-            addDoc(playersCollection, dataToSubmit)
-                .then(() => {
-                    showSuccessToast('Player added')
-                    formik.resetForm();
-                    navigate("/admin_players")
-                })
-                .catch(error => {
-                    showErrorToast(error)
-                })
-        } else {
-            //edit
+    const submitForm = async (values: valuesType | DocumentData) => {
+        try {
+            setLoading(true)
+            if (formType === 'add') {
+
+                await addDoc(playersCollection, values);
+                formik.resetForm();
+                showSuccessToast("Player was added successfully");
+                navigate("/admin_players");
+
+            } else {
+                //edit
+                const playerRef = doc(playersCollection, playerid);
+                await updateDoc(playerRef, values);
+                showSuccessToast("Player was edited successfully");
+                navigate("/admin_players");
+            }
+        } catch (error){
+            console.log(error)
+        } finally {
+            setLoading(false);
         }
     }
+
 
     useEffect(() => {
         const param = playerid;
@@ -95,7 +104,7 @@ export const AddEditPlayers = () => {
         }
     }, [playerid]);
 
-
+    // console.log(values)
 
     return (
         <AdminLayout title={formType === 'add' ? 'Add player' : 'Edit player'} navigate={navigate}>
@@ -103,7 +112,11 @@ export const AddEditPlayers = () => {
                 <div>
                     <form onSubmit={formik.handleSubmit}>
 
-                        image
+                        <FormControl error={selectError(formik,'image')}>
+                            <FileUploader/>
+                            {selectErrorHelper(formik, 'image')}
+                        </FormControl>
+
                         <hr/>
 
                         <h4>Player info</h4>
