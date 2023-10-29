@@ -32,6 +32,7 @@ export const AddEditPlayers = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [formType, setFormType] = useState('');
     const [values, setValues] = useState<valuesType | DocumentData>(defaultValues);
+    const [imgUrl, setImgUrl] = useState('')
     const {playerid} = useParams();
 
     const formik = useFormik({
@@ -105,6 +106,13 @@ export const AddEditPlayers = () => {
     }, [playerid]);
 
     // console.log(values)
+    const updateImageName = (fileUrl: string) => {
+        setImgUrl(fileUrl)
+    }
+
+    useEffect(() => {
+        formik.setFieldValue('image',imgUrl)
+    }, [imgUrl]);
 
     return (
         <AdminLayout title={formType === 'add' ? 'Add player' : 'Edit player'} navigate={navigate}>
@@ -113,7 +121,7 @@ export const AddEditPlayers = () => {
                     <form onSubmit={formik.handleSubmit}>
 
                         <FormControl error={selectError(formik,'image')}>
-                            <FileUploader/>
+                            <FileUploader fileUrl={(fileUrl: string) => updateImageName(fileUrl)}/>
                             {selectErrorHelper(formik, 'image')}
                         </FormControl>
 
