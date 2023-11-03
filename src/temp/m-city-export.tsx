@@ -1,3 +1,18 @@
+export type PlayerType = {
+  id: string;
+  image: string;
+  lastname: string;
+  name: string;
+  number: string;
+  position: string;
+  imageURL: string;
+}
+
+
+export type CityDbType = {
+  players: PlayerType[];
+}
+
 export const cityDb = {
   matches: [
     {

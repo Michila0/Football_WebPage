@@ -9,6 +9,7 @@ import {SignIn} from "./Components/signin/Sign.tsx";
 import {Dashboard} from "./Components/admin/Dashboard.tsx";
 import {AdminPlayers} from "./Components/admin/players/AdminPlayers.tsx";
 import { AddEditPlayers } from "./Components/admin/players/AddEditPlayers.tsx";
+import { TheTeam } from './Components/the-team/TheTeam.tsx';
 
 
 import {ToastContainer} from "react-toastify";
@@ -33,6 +34,7 @@ const App: React.FC<RoutesProps> = ({user}) => {
                 <Route path='/admin_players/add_player'  Component={Auth(AddEditPlayers)}/>
                 <Route path='/admin_players'  Component={Auth(AdminPlayers)}/>
                 <Route path='/dashboard'  Component={Auth(Dashboard)}/>
+                <Route path='/the_team'  Component={TheTeam}/>
                 <Route path='/sign_in'  Component={
                     props => (<SignIn {...props} user={user}/>)}/>
                 <Route path='/' Component={Home}/>

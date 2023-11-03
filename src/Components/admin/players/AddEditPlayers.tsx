@@ -33,6 +33,7 @@ export const AddEditPlayers = () => {
     const [formType, setFormType] = useState('');
     const [values, setValues] = useState<valuesType | DocumentData>(defaultValues);
     const [imgUrl, setImgUrl] = useState('')
+    // const [defaultImgUrl, setDefaultImgUrl] = useState<string>('')
     const {playerid} = useParams();
 
     const formik = useFormik({
@@ -121,7 +122,10 @@ export const AddEditPlayers = () => {
                     <form onSubmit={formik.handleSubmit}>
 
                         <FormControl error={selectError(formik,'image')}>
-                            <FileUploader fileUrl={(fileUrl: string) => updateImageName(fileUrl)}/>
+                            <FileUploader
+                                fileUrl={(fileUrl: string) => updateImageName(fileUrl)}
+                                // defaultImgUrl={defaultImgUrl}
+                            />
                             {selectErrorHelper(formik, 'image')}
                         </FormControl>
 
