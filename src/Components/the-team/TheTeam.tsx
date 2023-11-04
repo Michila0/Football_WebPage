@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from "react";
-import {ref} from "yup";
+import  {ReactNode, useEffect, useState} from "react";
 import { Slide } from "react-awesome-reveal";
 import {getDocs} from "firebase/firestore";
 
@@ -8,7 +7,7 @@ import { PlayerCard } from "../utils/PlayerCard.tsx";
 import {playersCollection, storage} from "../../config/firebase-config.tsx";
 import {showErrorToast} from "../utils/tools.tsx";
 import {PlayerType} from "../../temp/m-city-export.tsx";
-import { getDownloadURL } from "firebase/storage";
+import { getDownloadURL, ref } from "firebase/storage";
 import {CircularProgress} from "@mui/material";
 
 
@@ -38,6 +37,7 @@ export function TheTeam () {
             currentPlayers.forEach((player, index) => {
 
                 const playerImgRef = ref(storage,`players/${player.image}`)
+                console.log(playerImgRef)
 
                 promises.push(
                     new Promise((resolve, reject) => {
@@ -45,6 +45,7 @@ export function TheTeam () {
                             .then((url) => {
                                 currentPlayers[index].imageURL = url;
                                 resolve("Hi");
+                                console.log(url)
                             })
                             .catch((error) => {
                                 reject();
@@ -55,18 +56,39 @@ export function TheTeam () {
             })
             Promise.all(promises).then(() => setPlayers(currentPlayers))
 
-        } catch (error) {
+        } catch (err) {
             console.log("Sorry try again later")
             showErrorToast("Sorry try again later")
         } finally {
             setLoading(false)
         }
     }
+
+    function showPlayerByCategory (category: string): ReactNode {
+        return players
+            ? players.map((player) => {
+                return player.position === category
+                    ? (<Slide direction='left' key={player.id} triggerOnce={true}>
+                        <div className='item'>
+                            <PlayerCard
+                                number = {player.number}
+                                name= {player.name}
+                                lastname= {player.lastname}
+                                bck= {player.imageURL || ""}
+                            />
+                        </div>
+                    </Slide>)
+                    : null
+            })
+            : null
+    }
+
     useEffect(() => {
         setLoading(true)
         if (players.length < 1) {
             getPlayers()
         }
+        setLoading(false)
     }, [players]);
 
 
@@ -76,7 +98,39 @@ export function TheTeam () {
                 ? <div className='progress'>
                     <CircularProgress/>
                 </div>
-                : <div></div>
+                : <div>
+                    <div className='team_category_wrapper'>
+                        <div className='title'>Keepers</div>
+                        <div className='team_cards'>
+                            {showPlayerByCategory('Keeper')}
+
+                        </div>
+                    </div>
+
+                    <div className='team_category_wrapper'>
+                        <div className='title'>Defence</div>
+                        <div className='team_cards'>
+                            {showPlayerByCategory('Defence')}
+
+                        </div>
+                    </div>
+
+                    <div className='team_category_wrapper'>
+                        <div className='title'>Midfield</div>
+                        <div className='team_cards'>
+                            {showPlayerByCategory('Midfield')}
+
+                        </div>
+                    </div>
+
+                    <div className='team_category_wrapper'>
+                        <div className='title'>Strikers</div>
+                        <div className='team_cards'>
+                            {showPlayerByCategory('Strikers')}
+
+                        </div>
+                    </div>
+                </div>
             }
         </div>
     )

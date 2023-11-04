@@ -9,10 +9,10 @@ import {getAuth} from "firebase/auth";
 
 import 'firebase/firestore';
 //import firebase from "firebase/compat";
-import {addDoc, collection, getFirestore } from "firebase/firestore";
+import {addDoc, collection, getFirestore} from "firebase/firestore";
 
-import { cityDb } from '../temp/m-city-export.tsx';
 import { getStorage } from "firebase/storage";
+import {cityDb} from "../temp/m-city-export.tsx";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -45,7 +45,7 @@ export const teamsCollection = collection(db, 'teams')
 
 //import the data
 // cityDb.matches.forEach(async item => await addDoc(matchesCollection,item))
-//cityDb.players.forEach(async item => await addDoc(playersCollection,item))
+cityDb.players.forEach(async item => await addDoc(playersCollection,item))
 //cityDb.positions.forEach(async item => await addDoc(positionsCollection,item))
 //cityDb.promotions.forEach(async item => await addDoc(promotionsCollection,item))
 //cityDb.teams.forEach(async item => await addDoc(teamsCollection,item))

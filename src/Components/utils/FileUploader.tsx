@@ -4,15 +4,14 @@ import {useEffect} from "react";
 // import {Button} from "@mui/material";
 
 interface FileUploaderProps {
-    fileUrl: (url: string) => void;
+    fileUrl: (url: string, fileName: string) => void;
 }
 
 export function FileUploader ({fileUrl}: FileUploaderProps) {
-
     const _input = useFileUpload(storage, {
         accept:  'image/png, image/jpeg, image/jpg, image/webp',
         multiple: false,
-        path: `players`
+        path: 'players'
     })
 
     const {
@@ -30,13 +29,16 @@ export function FileUploader ({fileUrl}: FileUploaderProps) {
         isCompleted,
         onUpload,
         onUploadComplete,
+
         onRemove} = _input;
 
     useEffect(() => {
         if (isCompleted) {
-            fileUrl(downloadURL[0]);
+            fileUrl(downloadURL[0],files[0].name);
         }
-    }, [isCompleted, downloadURL, fileUrl]);
+    }, [isCompleted, downloadURL, fileUrl])
+
+
     return (
         <>
             <input
