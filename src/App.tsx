@@ -33,7 +33,7 @@ const App: React.FC<RoutesProps> = ({user}) => {
 
             <Routes>
                 <Route path="/admin_matches/edit_match/:match_id" Component={Auth(AddEditMatch)}/>
-                <Route path="/admin_matches/edit_match" Component={Auth(AddEditMatch)}/>
+                <Route path="/admin_matches/add_match" Component={Auth(AddEditMatch)}/>
                 <Route path='/admin_matches'  Component={Auth(AdminMatches)}/>
 
                 <Route path="/admin_players/edit_player/:playerid" Component={Auth(AddEditPlayers)}/>

@@ -8,9 +8,33 @@ export type PlayerType = {
   imageURL: string;
 }
 
+export type MatchesType = {
+  id: string;
+  away: string;
+  awayThmb: string;
+  date: string;
+  final: string;
+  local: string;
+  localThmb: string;
+  referee: string;
+  result: string;
+  resultAway: string;
+  resultLocal: string;
+  stadium: string;
+};
+
+export type TeamsType = {
+  id: string;
+  name: string;
+  shortName: string;
+  thmb: string;
+};
+
 
 export type CityDbType = {
   players: PlayerType[];
+  matches: MatchesType[];
+  teams: TeamsType[];
 }
 
 export const cityDb = {
