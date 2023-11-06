@@ -12,6 +12,7 @@ import { AddEditPlayers } from "./Components/admin/players/AddEditPlayers.tsx";
 import { TheTeam } from './Components/the-team/TheTeam.tsx';
 import { AdminMatches } from './Components/admin/matches/AdminMatches.tsx';
 import { AddEditMatch } from './Components/admin/matches/AddEditMatch.tsx';
+import { TheMatches } from "./Components/the-matches/TheMatches.tsx";
 
 
 import {ToastContainer} from "react-toastify";
@@ -41,6 +42,7 @@ const App: React.FC<RoutesProps> = ({user}) => {
                 <Route path='/admin_players'  Component={Auth(AdminPlayers)}/>
 
                 <Route path='/dashboard'  Component={Auth(Dashboard)}/>
+                <Route path='/the_matches'  Component={TheMatches}/>
                 <Route path='/the_team'  Component={TheTeam}/>
                 <Route path='/sign_in'  Component={
                     props => (<SignIn {...props} user={user}/>)}/>

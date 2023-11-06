@@ -8,14 +8,17 @@ import {AdminLayout} from "../../../hoc/AdminLayout.tsx";
 import {Button, FormControl, MenuItem, Select, TextField} from "@mui/material";
 import {doc, getDoc, getDocs} from "firebase/firestore";
 import {matchesCollection, teamsCollection} from "../../../config/firebase-config.tsx";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 
 const defaultValues: MatchesType = {
+    id:'',
     date:'',
     local:'',
+    localThmb: "",
     resultLocal:'',
     away:'',
+    awayThmb: "",
     resultAway:'',
     referee:'',
     stadium:'',
@@ -120,7 +123,7 @@ export function AddEditMatch () {
 
 
     return (
-        <AdminLayout title={formType ==='add' ? 'Add match':'Edit match'} navigate={useNavigate()}>
+        <AdminLayout title={ formType === 'add' ? 'Add match' : 'Edit match' } >
            <div className='editmatch_dialog_wrapper'>
                <div>
                    <form onSubmit={formik.handleSubmit}>
@@ -272,14 +275,10 @@ export function AddEditMatch () {
                                color='primary'
                                disabled={loading}
                            >
-                               {formType === 'add'
-                                   ? 'Add match'
-                                   : 'Edit match'
-                               }
+                               {formType == "add" ? 'Add match' : 'Edit match'}
                            </Button>
 
                        </div>
-
                    </form>
                </div>
            </div>

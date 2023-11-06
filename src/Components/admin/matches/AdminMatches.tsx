@@ -1,10 +1,13 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
+import {getDocs, limit, orderBy, query, startAfter} from "firebase/firestore";
+import {Button, Table, TableBody, TableCell, TableRow, Paper, CircularProgress, TableHead} from "@mui/material";
+import {Link, useNavigate} from "react-router-dom";
+
+
 import { AdminLayout } from "../../../hoc/AdminLayout.tsx";
 import { matchesCollection } from "../../../config/firebase-config.tsx";
-import {getDocs, limit, query, startAfter} from "firebase/firestore";
-import {Button, Table, TableBody, TableCell, TableRow, Paper, CircularProgress, TableHead} from "@mui/material";
 import { showErrorToast } from "../../utils/tools.tsx";
-import {Link, useNavigate} from "react-router-dom";
+import {MatchesType} from "../../../temp/m-city-export.tsx";
 
 export const AdminMatches = () => {
 
@@ -12,57 +15,103 @@ export const AdminMatches = () => {
     const [loading, setLoading] = useState(false);
     const [matches, setMatches] = useState<any>();
 
+
+    const dataLoading = useCallback(
+        async function () {
+            try {
+                const currentLoadedMatches: MatchesType[] = [];
+                const matchesQuery = query(
+                    matchesCollection,
+                    orderBy("date"),
+                    limit(5),
+                    startAfter(lastVisible)
+                );
+                const matchesSnapShot = await getDocs(matchesQuery);
+                matchesSnapShot.forEach((doc) => {
+                    currentLoadedMatches.push({
+                        id: doc.id,
+                        ...doc.data()
+                    } as MatchesType);
+                });
+
+                setMatches((preMatches) => {
+                    if (preMatches) {
+                        return [...preMatches, ...currentLoadedMatches];
+                    }
+                    return currentLoadedMatches;
+                });
+                setLastVisible(currentLoadedMatches.at(-1)?.date || null);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [lastVisible]
+    );
+
+
     useEffect(() => {
         if(!matches){
             setLoading(true);
-            const q = query(matchesCollection,limit(2));
-            console.log(q)
+            dataLoading();
+            // const q = query(matchesCollection,limit(2));
+            // console.log(q)
 
-            getDocs(q).then(snapshot => {
-                const lastVisible = snapshot.docs[snapshot.docs.length -1];
-                const matches = snapshot.docs.map( doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
-                setLastVisible(lastVisible);
-                setMatches(matches);
-            }).catch(error => {
-                showErrorToast(error)
-            }).finally(() => {
-                setLoading(false);
-            })
+            // getDocs(q).then(snapshot => {
+            //     const lastVisible = snapshot.docs[snapshot.docs.length -1];
+            //     const matches = snapshot.docs.map( doc => ({
+            //         id: doc.id,
+            //         ...doc.data()
+            //     }))
+            //     setLastVisible(lastVisible);
+            //     setMatches(matches);
+            // }).catch(error => {
+            //     showErrorToast(error)
+            // }).finally(() => {
+            //     setLoading(false);
+            // })
         }
 
-    }, [matches]);
+    }, [matches, dataLoading]);
     // console.log(players)
     // console.log(lastVisible)
 
-    const loadMoreMatches = () => {
-        if (lastVisible){
-            setLoading(true)
-            const q = query(matchesCollection, startAfter(lastVisible), limit(2))
-
-            getDocs(q)
-                .then(snapshot => {
-                    const lastVisible = snapshot.docs[snapshot.docs.length -1];
-                    const newMatches = snapshot.docs.map( doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
-                    setLastVisible(lastVisible)
-                    setMatches([...matches, ...newMatches])
-                })
-                .catch(error => {
-                    showErrorToast(error)
-                }).finally(() => {
-                setLoading(false);
-            })
-        }else{
-            showErrorToast('nothing to load')
+    function loadMoreMatches() {
+        if (lastVisible) {
+            setLoading(true);
+            dataLoading();
+        } else {
+            showErrorToast("nothing to load");
         }
     }
 
-    // console.log(players)
+    // const loadMoreMatches = () => {
+    //     if (lastVisible){
+    //         setLoading(true)
+    //         const q = query(matchesCollection, startAfter(lastVisible), limit(2))
+    //
+    //         getDocs(q)
+    //             .then(snapshot => {
+    //                 const lastVisible = snapshot.docs[snapshot.docs.length -1];
+    //                 const newMatches = snapshot.docs.map( doc => ({
+    //                     id: doc.id,
+    //                     ...doc.data()
+    //                 }));
+    //                 setLastVisible(lastVisible)
+    //                 setMatches([...matches, ...newMatches])
+    //             })
+    //             .catch(error => {
+    //                 showErrorToast(error)
+    //             }).finally(() => {
+    //             setLoading(false);
+    //         })
+    //     }else{
+    //         showErrorToast('nothing to load')
+    //     }
+    // }
+
+    // console.log(matches)
 
     return (
         <AdminLayout title="The Matches" navigate={useNavigate()}>
@@ -91,7 +140,7 @@ export const AdminMatches = () => {
                     </TableHead>
                     <TableBody>
                         {matches
-                            ? matches.map((match: any, i:number) => (
+                            ? matches.map((match) => (
                                 <TableRow key={match.id}>
                                     <TableCell>
                                         {match.date}
