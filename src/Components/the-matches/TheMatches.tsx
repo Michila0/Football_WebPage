@@ -126,7 +126,7 @@ export const TheMatches = () => {
                                     </div>
                                 </div>
                             </div>
-                            <MatchesList/>
+                            <MatchesList matches={state.filterMatches}/>
                         </div>
                         <div className='right'>
                             <LeagueTable/>
