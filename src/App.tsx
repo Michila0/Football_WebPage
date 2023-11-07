@@ -13,6 +13,7 @@ import { TheTeam } from './Components/the-team/TheTeam.tsx';
 import { AdminMatches } from './Components/admin/matches/AdminMatches.tsx';
 import { AddEditMatch } from './Components/admin/matches/AddEditMatch.tsx';
 import { TheMatches } from "./Components/the-matches/TheMatches.tsx";
+import {NotFound} from "./Components/not-found/NotFound.tsx";
 
 
 import {ToastContainer} from "react-toastify";
@@ -47,6 +48,7 @@ const App: React.FC<RoutesProps> = ({user}) => {
                 <Route path='/sign_in'  Component={
                     props => (<SignIn {...props} user={user}/>)}/>
                 <Route path='/' Component={Home}/>
+                <Route path='*' Component={NotFound}/>
             </Routes>
             <ToastContainer/>
             <Footer/>

@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 import NodeGroup  from "react-move/NodeGroup";
 import {DocumentData} from "firebase/firestore";
 import {easePolyOut} from "d3-ease";
@@ -54,7 +54,8 @@ export const  MatchesList = ({matches}: propType ) => {
                                             style={{
                                                 background:`url(/images/team_icons/${data.localThmb}.png)`
                                             }}
-                                        ></div>
+                                        >
+                                        </div>
                                         <div className='team'>{data.local}</div>
                                         <div className='result'>{data.resultLocal}</div>
 
