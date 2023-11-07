@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export function  MatchesList() {
+export const  MatchesList = () => {
     return (
         <>
             matches list
